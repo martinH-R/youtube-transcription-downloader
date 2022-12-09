@@ -1,17 +1,37 @@
 import gradio as gr
 from pytube import YouTube
+from youtube_transcript_api import YouTubeTranscriptApi
+import re
 
-#TODO: filling input function with youtube link recogntion, else return error
+def islinkcompatible (link):
+    #TODO: complete function
+    return()
+
+def transcriptvideo (link):
+    #TODO: complete function
+    return()
+
+def exporttranscription(link):
+    #TODO: complete function
+    return ()
+
 def input(input_text):
-    input_text=YouTube(input_text)
-    return {output_text:input_text.streams.filter(only_audio=True).get_highest_resolution}
+    isyoutubelink=re.findall('youtu',input_text)
+    if len(isyoutubelink)>0:
+        input_text=YouTube(input_text).streams.filter(only_audio=True).get_highest_resolution
+        print(output_text)
+        subtitles = YouTubeTranscriptApi.get_transcript("SW14tOda_kI")
+        print(subtitles)
+        return {"output_text":input_text, "output_text":gr.update(visible=True)}
+    else:
+        return{"output_text": "The link is not a youtube link"}
 
 with gr.Blocks(css="#button {width:200px;}") as demo:
     #TODO: adjusting button size in CSS
     with gr.Row():
         input_text = gr.Textbox(placeholder="Collez votre lien Youtube ici",max_lines=1, show_label=False)
         input_btn = gr.Button("Générer", elem_id="button")
-    output_text = gr.Textbox(visible=True, max_lines=1, show_label=False)
+    output_text = gr.Textbox(max_lines=1, show_label=False, visible=False)
     input_btn.click(fn=input, inputs=input_text, outputs=output_text)
- 
+
 demo.launch()
