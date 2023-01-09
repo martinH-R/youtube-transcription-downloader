@@ -41,8 +41,6 @@ def input(link):
     is_the_input_text_a_youtube_link(link)
     formatting_csv(link)
 
-
-
 with gr.Blocks(css="#button {width:200px;}") as demo:
     #TODO: adjusting button size in CSS
     with gr.Row():
